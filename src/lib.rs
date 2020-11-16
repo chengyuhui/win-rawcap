@@ -9,6 +9,7 @@ use tokio::net::UdpSocket;
 use winapi::shared::minwindef::DWORD;
 use winapi::um::winsock2;
 
+/// Puts a socket into promiscuous mode so that it can receive all packets.
 fn enter_promiscuous(socket: &mut StdSocket) -> Result<()> {
     let rc = unsafe {
         let in_buffer = [winapi::shared::mstcpip::RCVALL_IPLEVEL];
@@ -34,6 +35,7 @@ fn enter_promiscuous(socket: &mut StdSocket) -> Result<()> {
     }
 }
 
+/// Creates a raw socket used to capture packets (disguised as a UdpSocket)
 pub fn create_raw_socket() -> Result<UdpSocket> {
     // Create socket
     let socket = Socket::new(Domain::ipv4(), Type::raw(), None)?;

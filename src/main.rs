@@ -11,7 +11,6 @@ async fn main() -> Result<()> {
     loop {
         let len = socket.recv(&mut buf).await?;
         let mut packet = PacketHeaders::from_ip_slice(&buf[0..len])?;
-
         println!("{:?}", packet.transport);
     }
 
